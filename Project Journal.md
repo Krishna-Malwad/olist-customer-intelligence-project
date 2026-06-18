@@ -1,4 +1,3 @@
-
 # Olist Customer Intelligence Project
 
 ## Project Objective
@@ -108,7 +107,7 @@ Additional Supporting Tables:
 
 ---
 
-# Day 1 - Project Setup & Data Understanding
+# Day 1(15 June 2026) - Project Setup & Data Understanding
 
 ## Activities Completed
 
@@ -143,7 +142,7 @@ Example:
 
 ---
 
-# Day 2 - Orders Table & ETL Concepts
+# Day 2(16 June 2026) - Orders Table & ETL Concepts
 
 ## Activities Completed
 
@@ -200,7 +199,7 @@ orders
 
 ---
 
-# Day 3 - ETL Pipeline Development, Data Validation & GitHub Setup
+# Day 3 (17 June 2026) - ETL Pipeline Development, Data Validation & GitHub Setup
 
 ## Activities Completed
 
@@ -313,24 +312,148 @@ Results:
 
 ---
 
-# Current Project Status
 
-## Completed
+# Day 4 (18 June 2026) - Products ETL, Payments ETL & Python Integration
+
+## Activities Completed
+
+### Products ETL Pipeline
+
+* Created the `products_raw` staging table.
+* Successfully imported **32,951** product records.
+* Validated the imported dataset.
+* Performed data quality checks including:
+  * NULL and blank value validation
+  * Duplicate `product_id` validation
+  * Zero and negative value validation
+* Investigated **610** products with missing category, name length, description length and photo count.
+* Verified that all 610 products were referenced in `order_items`, therefore retained for analysis.
+* Created the production `products` table.
+* Loaded validated data into the final table.
+* Successfully loaded all **32,951** products.
+
+---
+
+### Order Payments ETL Pipeline
+
+* Created the `order_payments_raw` staging table.
+* Successfully imported **103,886** payment records.
+* Identified `(order_id, payment_sequential)` as the candidate Composite Primary Key.
+* Validated that the key combination contained no duplicates.
+* Performed data validation:
+  * NULL and blank value validation
+  * Negative value validation
+  * Zero value validation
+* Created the production `order_payments` table.
+* Implemented:
+  * Composite Primary Key
+  * Foreign Key relationship with `orders`
+* Successfully loaded all validated payment records into the final table.
+* Verified row counts and production data.
+
+---
+
+### Order Reviews Investigation
+
+* Began analysis of the `olist_order_reviews_dataset.csv` dataset.
+* Designed the `order_reviews_raw` staging table.
+* Attempted to import the dataset using MySQL Workbench.
+* Identified an unexpected import limitation where only **279** records were imported despite the CSV containing **99,224** records.
+* Investigated:
+  * Primary Key constraints
+  * Table design
+  * CSV formatting
+  * Import configuration
+* Concluded that the issue originates from the MySQL Workbench Import Wizard rather than the database schema.
+
+---
+
+### Introduction to Pandas
+
+To overcome the Workbench import limitation, introduced Pandas into the ETL workflow.
+
+Concepts learned:
+
+* Importing libraries
+* Reading CSV files using `pd.read_csv()`
+* Understanding DataFrames
+* Displaying records using:
+  * `head()`
+  * `tail()`
+* Inspecting datasets using:
+  * `shape`
+  * `info()`
+  * `columns`
+* Selecting single and multiple columns.
+* Basic aggregation functions:
+  * `mean()`
+  * `max()`
+
+---
+
+### Python and MySQL Integration
+
+* Installed `mysql-connector-python`.
+* Established the first successful Python connection with the MySQL database.
+* Executed SQL queries directly from Python.
+* Retrieved query results using:
+  * `cursor.execute()`
+  * `fetchone()`
+* Learned how Python returns SQL query results as tuples.
+* Learned tuple indexing for extracting individual values.
+
+---
+
+## Key Learnings
+
+### Data Engineering
+
+* Candidate Primary Key validation before implementation.
+* Business data validation in addition to technical validation.
+* Importance of staging tables in ETL pipelines.
+* Verification of production data after loading.
+
+### Python & Pandas
+
+* Reading CSV files into DataFrames.
+* Understanding DataFrame structure.
+* Inspecting datasets.
+* Selecting columns.
+* Performing basic statistical analysis.
+* Integrating Python with MySQL.
+
+### Problem Solving
+
+* Diagnosed limitations of the MySQL Workbench Import Wizard.
+* Began transitioning toward a Python-based ETL workflow for handling complex datasets.
+
+---
+
+## Current Project Status
+
+### Completed
 
 * [X] customers
 * [X] orders_raw
 * [X] orders
 * [X] order_items_raw
 * [X] order_items
+* [X] products_raw
+* [X] products
+* [X] order_payments_raw
+* [X] order_payments
 
-## Next Tables
+### In Progress
 
-* [ ] products
-* [ ] payments
-* [ ] reviews
+* [ ] order_reviews_raw (Python-based import)
+
+### Remaining
+
 * [ ] sellers
+* [ ] geolocation
+* [ ] product_category_translation
 
-## Upcoming
+### Upcoming
 
 * [ ] Exploratory Data Analysis
 * [ ] Business KPI Development
@@ -342,20 +465,16 @@ Results:
 
 ## Data Loaded So Far
 
-| Table       | Records |
-| ----------- | ------: |
-| customers   |  99,441 |
-| orders      |  99,441 |
-| order_items | 112,650 |
+| Table          | Records |
+| -------------- | ------: |
+| customers      |  99,441 |
+| orders         |  99,441 |
+| order_items    | 112,650 |
+| products       |  32,951 |
+| order_payments | 103,886 |
 
 ---
 
 ## Summary
 
-Completed two end-to-end ETL pipelines:
-
-orders.csv → orders_raw → validation → orders
-
-order_items.csv → order_items_raw → validation → order_items
-
-Established foundational database relationships, implemented data validation workflows, and created a professional GitHub project structure for future analytics and machine learning development.
+Day 4 focused on strengthening the ETL pipeline by completing the **Products** and **Order Payments** datasets while maintaining rigorous data validation standards. An unexpected limitation in the MySQL Workbench Import Wizard during the **Order Reviews** import led to the introduction of  **Python** ,  **Pandas** , and **MySQL Connector** into the project. This marks the transition from GUI-based imports toward a scalable Python-driven ETL workflow, bringing the project closer to real-world data engineering practices.
